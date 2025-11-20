@@ -1,0 +1,101 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f4f4; color: #333; -webkit-tap-highlight-color: transparent; }
+
+/*HEADER*/
+.app-header {
+    background: #fff;
+    padding: 15px 0; 
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-logo {
+    height: 40px; 
+    width: auto; 
+    display: block;
+}
+
+/* LISTA*/
+.series-list { padding: 20px; display: flex; flex-direction: column; gap: 25px; padding-bottom: 100px; }
+
+/* CARD (ESTADO NORMAL) */
+.card {
+    background: #fff; border-radius: 15px; overflow: hidden; position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+    transform: scale(1); 
+    z-index: 1;
+}
+
+.card-image { width: 100%; height: 220px; object-fit: cover; display: block; }
+.card-info { padding: 15px; }
+.card-title { margin-bottom: 5px; font-size: 1.1rem; color: #000; }
+.card-meta { font-size: 0.9rem; color: #666; }
+
+/*CARD (ESTADO ACTIVO)*/
+.card.active {
+    transform: scale(1.05); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+    z-index: 10; 
+}
+
+/*OVERLAY Y BOTÓN VER MÁS */
+.card-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8); 
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+    pointer-events: none; 
+}
+
+.card.active .card-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.btn-ver-mas {
+    background: transparent; border: 2px solid #fff; color: #fff;
+    padding: 10px 30px; border-radius: 25px; font-weight: bold;
+    text-transform: uppercase; cursor: pointer; margin-top: 15px;
+}
+
+/*MODAL INFERIOR (BOTTOM SHEET)*/
+.modal {
+    position: fixed; z-index: 2000; 
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6); 
+    display: flex; 
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.hidden { display: none !important; }
+
+.modal-content {
+    background-color: #fff; width: 100%; max-height: 80vh; 
+    border-radius: 25px 25px 0 0; 
+    padding: 25px; position: relative;
+    animation: slideUp 0.3s ease-out; 
+    overflow-y: auto;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.close-button {
+    position: absolute; top: 15px; right: 20px;
+    font-size: 30px; color: #333; font-weight: bold;
+    padding: 10px; cursor: pointer; z-index: 2001;
+}
+
+/* SPINNER */
+.loading-spinner { text-align: center; padding: 20px; color: #666; }

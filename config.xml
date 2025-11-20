@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.akaya.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>AkayaApp</name>
+    <description>Prueba Técnica Akaya</description>
+    <author email="ivan@akayamedia.com" href="https://akayamedia.com">
+        Developer
+    </author>
+    
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+
+    <platform name="android">
+        <icon src="www/img/akayamedia.png" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="www/img/akayamediaround.png" />
+        <preference name="AndroidWindowSplashScreenBrandingImage" value="www/img/akayamedia.png" />
+        <preference name="AndroidWindowSplashScreenBackground" value="#FFFFFF" />
+        
+        <preference name="SplashScreenDelay" value="3000" />
+        <preference name="FadeSplashScreen" value="true"/>
+        
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
+    </platform>
+</widget>

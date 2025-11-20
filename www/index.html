@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; 
+        style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; 
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; 
+        img-src 'self' data: https://api.akayamedia.com; 
+        connect-src 'self' https://api-dev.akayamedia.com https://api.akayamedia.com;">
+
+    <title>Akaya Series</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+
+    <header class="app-header">
+        <img src="img/akayamedia.png" alt="Akaya Media" class="header-logo">
+    </header>
+
+    <main id="series-container" class="series-list">
+    </main>
+
+    <div id="loading" class="loading-spinner" style="display: none;">
+        Cargando...
+    </div>
+
+    <div id="detail-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="close-modal" class="close-button">&times;</span>
+            <div id="modal-body">
+                </div>
+        </div>
+    </div>
+
+    <script src="cordova.js"></script> 
+    <script src="js/config.js"></script> 
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
