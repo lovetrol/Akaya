@@ -36,17 +36,12 @@ const app = {
             console.error("Error cargando datos:", error);
         }
         
-        // Ocultamos spinner
         document.getElementById('loading').style.display = 'none';
     },
 
     renderNextBatch: function() {
         const { allSeries, currentIndex, pageSize } = this.state;
-        
-        // Si ya acabamos, salir
         if (currentIndex >= allSeries.length) return;
-
-        // Tomamos el siguiente lote
         const batch = allSeries.slice(currentIndex, currentIndex + pageSize);
         const container = document.getElementById('series-container');
 
@@ -61,7 +56,7 @@ const app = {
 
     setupScroll: function() {
         window.addEventListener('scroll', () => {
-            // Si llegamos al fondo de la página
+            // espacio al final
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
                 this.renderNextBatch();
             }
