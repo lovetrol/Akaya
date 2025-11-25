@@ -2,7 +2,8 @@ const app = {
     state: {
         allSeries: [],
         currentIndex: 0,
-        pageSize: 5
+        pageSize: 10,
+        isLoading: false 
     },
 
     initialize: function() {
@@ -21,7 +22,6 @@ const app = {
         try {
             const rawData = await ApiService.getSeries();
             const listaReal = rawData.items || []; 
-
             this.state.allSeries = listaReal.filter(serie => {
                 const estaPublicada = serie.status && serie.status.toLowerCase() === 'published';
                 const tieneImagen = serie.image && serie.image.trim() !== '';
@@ -29,7 +29,8 @@ const app = {
                 return estaPublicada && tieneImagen && tieneCapitulos;
             });
             
-            console.log("Series cargadas:", this.state.allSeries.length);
+            console.log("Series válidas cargadas:", this.state.allSeries.length);
+            
             this.renderNextBatch();
 
         } catch (error) {
@@ -40,24 +41,29 @@ const app = {
     },
 
     renderNextBatch: function() {
-        const { allSeries, currentIndex, pageSize } = this.state;
-        if (currentIndex >= allSeries.length) return;
-        const batch = allSeries.slice(currentIndex, currentIndex + pageSize);
-        const container = document.getElementById('series-container');
+        const { allSeries, pageSize } = this.state;
+        if (!allSeries || allSeries.length === 0) return;
 
-        batch.forEach(serie => {
+        this.state.isLoading = true;
+        const container = document.getElementById('series-container');
+        for (let i = 0; i < pageSize; i++) {
+            const indexCircular = this.state.currentIndex % allSeries.length;
+            
+            const serie = allSeries[indexCircular];
             const div = document.createElement('div');
             div.innerHTML = UiRenderer.createCardHtml(serie).trim();
             container.appendChild(div.firstChild);
-        });
+            this.state.currentIndex++;
+        }
 
-        this.state.currentIndex += pageSize;
+        this.state.isLoading = false;
     },
 
     setupScroll: function() {
         window.addEventListener('scroll', () => {
-            // espacio al final
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+            const distanciaAlFinal = document.body.offsetHeight - (window.innerHeight + window.scrollY);
+            
+            if (distanciaAlFinal < 100 && !this.state.isLoading) {
                 this.renderNextBatch();
             }
         });
@@ -65,8 +71,11 @@ const app = {
 
     openDetail: async function(id, event) {
         event.stopPropagation(); 
+        console.log("Abriendo detalle:", id);
         const detail = await ApiService.getSerieDetail(id);
-        if (detail) UiRenderer.renderModal(detail);
+        if (detail) {
+            UiRenderer.renderModal(detail);
+        }
     }
 };
 
